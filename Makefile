@@ -14,9 +14,12 @@ deploy-verify:
 create-prompt:
 	npx hardhat run scripts/playground/0-createPrompt.ts --network $(NETWORK)
 
+upvote-prompt:
+	npx hardhat run scripts/playground/1-upvotePrompt.ts --network $(NETWORK)
+
 #-------------- SETUP ----------------#
 
-setup: deploy create-prompt
+setup: deploy create-prompt upvote-prompt
 
 #-------------- SUBGRAPH ----------------#
 

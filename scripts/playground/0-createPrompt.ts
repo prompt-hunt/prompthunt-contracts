@@ -34,9 +34,11 @@ async function main() {
 
   // Set data
   const tx = await promptHunt.connect(alice).createPrompt(dataUri);
-  await tx.wait();
+  const receipt = await tx.wait();
 
-  console.log('Created new prompt');
+  const promptId = receipt.events?.find((e) => e.event === 'PromptCreated')?.args?.id;
+
+  console.log('Created new prompt with id: ', promptId);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
