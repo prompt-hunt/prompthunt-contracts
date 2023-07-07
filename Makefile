@@ -11,12 +11,12 @@ deploy-verify:
 
 #-------------- PLAYGROUND ----------------#
 
-set-data:
-	npx hardhat run scripts/playground/setData.ts --network $(NETWORK)
+create-prompt:
+	npx hardhat run scripts/playground/0-createPrompt.ts --network $(NETWORK)
 
 #-------------- SETUP ----------------#
 
-setup: deploy set-data
+setup: deploy create-prompt
 
 #-------------- SUBGRAPH ----------------#
 

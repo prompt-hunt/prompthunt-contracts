@@ -1,29 +1,28 @@
-import { setDeploymentAddress } from "../../.deployment/deploymentManager";
-import { task } from "hardhat/config";
-import { verifyAddress } from "../../utils/verifyAddress";
+import { setDeploymentAddress } from '../../.deployment/deploymentManager';
+import { task } from 'hardhat/config';
+import { verifyAddress } from '../../utils/verifyAddress';
 
-task("deploy", "Deploy all contracts")
-  .addFlag("verify", "verify contracts on etherscan")
+task('deploy', 'Deploy all contracts')
+  .addFlag('verify', 'verify contracts on etherscan')
   .setAction(async (args, { ethers, network }) => {
     const { verify } = args;
-    console.log("Network:", network.name);
+    console.log('Network:', network.name);
 
     const [deployer] = await ethers.getSigners();
-    console.log("Using address: ", deployer.address);
+    console.log('Using address: ', deployer.address);
 
     const balance = await ethers.provider.getBalance(deployer.address);
-    console.log("Balance: ", ethers.utils.formatEther(balance));
+    console.log('Balance: ', ethers.utils.formatEther(balance));
 
-    const Storage = await ethers.getContractFactory("Storage");
-    const storageArgs: [string] = ["Initial message"];
-    const storage = await Storage.deploy(...storageArgs);
+    const PromptHunt = await ethers.getContractFactory('PromptHunt');
+    const promptHunt = await PromptHunt.deploy();
 
-    await storage.deployed();
+    await promptHunt.deployed();
 
     if (verify) {
-      await verifyAddress(storage.address, storageArgs);
+      await verifyAddress(promptHunt.address, []);
     }
 
-    console.log("Deployed Storage at", storage.address);
-    setDeploymentAddress(network.name, "Storage", storage.address);
+    console.log('Deployed PromptHunt at', promptHunt.address);
+    setDeploymentAddress(network.name, 'PromptHunt', promptHunt.address);
   });
