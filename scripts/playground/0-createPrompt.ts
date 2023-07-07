@@ -15,7 +15,7 @@ async function main() {
   );
 
   // Upload to IPFS
-  const data = {
+  const promptData = {
     title: 'Title',
     model: 'GPT',
     prompt:
@@ -27,7 +27,7 @@ async function main() {
     exampleOutput:
       'Day 1: Breakfast: Avocado and Bacon Omelette Recipe: Avocado and Bacon Omelette, Lunch: Greek Salad with Grilled Chicken Recipe: Greek Salad with Grilled Chicken, Dinner: Baked Salmon with Lemon Butter Sauce and Roasted Asparagus Recipe: Baked Salmon with Lemon Butter Sauce + Roasted Asparagus',
   };
-  const dataUri = await uploadToIPFS(data);
+  const dataUri = await uploadToIPFS(promptData);
   if (!dataUri) throw new Error('Failed to upload to IPFS');
 
   console.log('Data Uri: ', dataUri);

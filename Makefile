@@ -17,9 +17,12 @@ create-prompt:
 upvote-prompt:
 	npx hardhat run scripts/playground/1-upvotePrompt.ts --network $(NETWORK)
 
+add-prompt-example:
+	npx hardhat run scripts/playground/2-addPromptExample.ts --network $(NETWORK)
+
 #-------------- SETUP ----------------#
 
-setup: deploy create-prompt upvote-prompt
+setup: deploy create-prompt upvote-prompt add-prompt-example
 
 #-------------- SUBGRAPH ----------------#
 

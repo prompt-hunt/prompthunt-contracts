@@ -36,6 +36,11 @@ contract PromptHunt {
      */
     event PromptUpvoted(uint256 id, address upvoter);
 
+    /**
+     * @dev Emitted when a prompt example is added
+     */
+    event PromptExampleAdded(address user, string dataUri);
+
     // =========================== Constructor ==============================
 
     constructor() {
@@ -69,5 +74,14 @@ contract PromptHunt {
         prompt.upvotes += 1;
 
         emit PromptUpvoted(_promptId, msg.sender);
+    }
+
+    /**
+     * @dev Adds an example to a prompt
+     */
+    function addPromptExample(uint256 _promptId, string memory _dataUri) public {
+        require(_promptId < nextPromptId.current(), "Prompt does not exist");
+
+        emit PromptExampleAdded(msg.sender, _dataUri);
     }
 }
