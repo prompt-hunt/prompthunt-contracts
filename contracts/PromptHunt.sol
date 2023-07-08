@@ -33,6 +33,9 @@ contract PromptHunt {
     // Whether a user has claimed their funds
     mapping(address => bool) hasClaimed;
 
+    // The timestamp when claiming is open
+    uint256 claimOpenTimestamp;
+
     // Proposal request id counter
     Counters.Counter nextPromptId;
 
@@ -62,6 +65,7 @@ contract PromptHunt {
 
     constructor() {
         nextPromptId.increment();
+        claimOpenTimestamp = block.timestamp + 7 days;
     }
 
     // =========================== User functions ==============================
@@ -115,6 +119,7 @@ contract PromptHunt {
      */
     function claimFunds() public {
         require(!hasClaimed[msg.sender], "Already claimed");
+        require(block.timestamp >= claimOpenTimestamp, "Claiming is not open");
 
         uint256 totalAmount = address(this).balance;
         uint256 amount = (totalAmount * userUpvotes[msg.sender]) / totalUpvotes;
