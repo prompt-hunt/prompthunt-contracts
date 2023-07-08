@@ -37,6 +37,9 @@ const config: HardhatUserConfig = {
       url: 'https://matic-mumbai.chainstacklabs.com',
       accounts,
     },
+    hardhat: {
+      accounts,
+    },
   },
   etherscan: {
     apiKey: {
