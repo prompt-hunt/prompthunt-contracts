@@ -27,6 +27,9 @@ contract PromptHunt {
     // Total upvotes by user
     mapping(address => uint256) userUpvotes;
 
+    // Total number of votes
+    uint256 totalVotes;
+
     // Proposal request id counter
     Counters.Counter nextPromptId;
 
@@ -89,6 +92,7 @@ contract PromptHunt {
 
         address owner = promptIdToOwner[_promptId];
         userUpvotes[owner] += 1;
+        totalVotes += 1;
 
         emit PromptUpvoted(_promptId, msg.sender);
         emit UserUpvotesUpdated(owner, userUpvotes[owner]);
@@ -102,4 +106,6 @@ contract PromptHunt {
 
         emit PromptExampleAdded(_promptId, msg.sender, _dataUri);
     }
+
+    receive() external payable {}
 }
