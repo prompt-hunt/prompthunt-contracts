@@ -17,8 +17,8 @@ async function main() {
   // Upload to IPFS
   const exampleData = {
     exampleInput: {
-      gender: 'female',
-      age: '23',
+      gender: 'male',
+      age: '73',
     },
     exampleOutput: 'Day 1: Breakfast: Eggs',
   };

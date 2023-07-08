@@ -16,16 +16,19 @@ async function main() {
 
   // Upload to IPFS
   const promptData = {
-    title: 'Title',
+    title: 'Personalized Meal Planner',
     model: 'GPT',
     prompt:
-      'act as a nutritionist. create personalized a meal planner for a person of gender <gender> and age <age>',
+      'Act as a nutritionist. create personalized a meal planner for a person of gender <gender> and age <age>',
+    image:
+      'https://firebasestorage.googleapis.com/v0/b/promptbase.appspot.com/o/DALLE_IMAGES%2FCrpcqah7YdgU133cBw6H%2Fresized%2F1687293200789_800x800.webp?alt=media&token=c5f63804-7181-4039-bf15-1a24bf98afea',
     exampleInput: {
-      gender: 'male',
-      age: '30',
+      gender: 'female',
+      age: '23',
     },
     exampleOutput:
       'Day 1: Breakfast: Avocado and Bacon Omelette Recipe: Avocado and Bacon Omelette, Lunch: Greek Salad with Grilled Chicken Recipe: Greek Salad with Grilled Chicken, Dinner: Baked Salmon with Lemon Butter Sauce and Roasted Asparagus Recipe: Baked Salmon with Lemon Butter Sauce + Roasted Asparagus',
+    category: 'Art & Illustration',
   };
   const dataUri = await uploadToIPFS(promptData);
   if (!dataUri) throw new Error('Failed to upload to IPFS');
