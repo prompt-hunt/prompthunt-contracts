@@ -29,17 +29,17 @@ contract PromptHunt {
     /**
      * @dev Emitted when a prompt is created
      */
-    event PromptCreated(uint256 id, address owner, string dataUri);
+    event PromptCreated(uint256 indexed id, address owner, string dataUri);
 
     /**
      * @dev Emitted when a prompt is upvoted
      */
-    event PromptUpvoted(uint256 id, address upvoter);
+    event PromptUpvoted(uint256 indexed id, address indexed upvoter);
 
     /**
      * @dev Emitted when a prompt example is added
      */
-    event PromptExampleAdded(address user, string dataUri);
+    event PromptExampleAdded(uint256 indexed id, address user, string dataUri);
 
     // =========================== Constructor ==============================
 
@@ -72,6 +72,7 @@ contract PromptHunt {
         Prompt storage prompt = prompts[_promptId];
 
         prompt.upvotes += 1;
+        hasUpvotedPrompt[msg.sender][_promptId] = true;
 
         emit PromptUpvoted(_promptId, msg.sender);
     }
@@ -82,6 +83,6 @@ contract PromptHunt {
     function addPromptExample(uint256 _promptId, string memory _dataUri) public {
         require(_promptId < nextPromptId.current(), "Prompt does not exist");
 
-        emit PromptExampleAdded(msg.sender, _dataUri);
+        emit PromptExampleAdded(_promptId, msg.sender, _dataUri);
     }
 }
