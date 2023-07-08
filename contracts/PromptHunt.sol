@@ -28,7 +28,10 @@ contract PromptHunt {
     mapping(address => uint256) userUpvotes;
 
     // Total number of votes
-    uint256 totalVotes;
+    uint256 totalUpvotes;
+
+    // Whether a user has claimed their funds
+    mapping(address => bool) hasClaimed;
 
     // Proposal request id counter
     Counters.Counter nextPromptId;
@@ -92,7 +95,7 @@ contract PromptHunt {
 
         address owner = promptIdToOwner[_promptId];
         userUpvotes[owner] += 1;
-        totalVotes += 1;
+        totalUpvotes += 1;
 
         emit PromptUpvoted(_promptId, msg.sender);
         emit UserUpvotesUpdated(owner, userUpvotes[owner]);
@@ -105,6 +108,21 @@ contract PromptHunt {
         require(_promptId < nextPromptId.current(), "Prompt does not exist");
 
         emit PromptExampleAdded(_promptId, msg.sender, _dataUri);
+    }
+
+    /**
+     * @dev Claims funds for a user
+     */
+    function claimFunds() public {
+        require(!hasClaimed[msg.sender], "Already claimed");
+
+        uint256 totalAmount = address(this).balance;
+        uint256 amount = (totalAmount * userUpvotes[msg.sender]) / totalUpvotes;
+
+        hasClaimed[msg.sender] = true;
+
+        (bool success, ) = payable(msg.sender).call{value: amount}("");
+        require(success, "Failed to send Ether");
     }
 
     receive() external payable {}
