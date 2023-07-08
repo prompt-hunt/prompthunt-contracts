@@ -21,6 +21,12 @@ contract PromptHunt {
     // Whether an address has upvoted a prompt (address -> prompt id -> bool)
     mapping(address => mapping(uint256 => bool)) public hasUpvotedPrompt;
 
+    // Prompt id to owner
+    mapping(uint256 => address) promptIdToOwner;
+
+    // Total upvotes by user
+    mapping(address => uint256) userUpvotes;
+
     // Proposal request id counter
     Counters.Counter nextPromptId;
 
@@ -41,6 +47,11 @@ contract PromptHunt {
      */
     event PromptExampleAdded(uint256 indexed id, address user, string dataUri);
 
+    /**
+     * @dev Emitted when a user's prompt is updated
+     */
+    event UserUpvotesUpdated(address indexed user, uint256 totalUpvotes);
+
     // =========================== Constructor ==============================
 
     constructor() {
@@ -58,6 +69,8 @@ contract PromptHunt {
         prompts[id] = Prompt({owner: msg.sender, dataUri: _dataUri, upvotes: 0});
         nextPromptId.increment();
 
+        promptIdToOwner[id] = msg.sender;
+
         emit PromptCreated(id, msg.sender, _dataUri);
     }
 
@@ -74,7 +87,11 @@ contract PromptHunt {
         prompt.upvotes += 1;
         hasUpvotedPrompt[msg.sender][_promptId] = true;
 
+        address owner = promptIdToOwner[_promptId];
+        userUpvotes[owner] += 1;
+
         emit PromptUpvoted(_promptId, msg.sender);
+        emit UserUpvotesUpdated(owner, userUpvotes[owner]);
     }
 
     /**
