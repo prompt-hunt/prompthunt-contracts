@@ -9,6 +9,15 @@ deploy:
 deploy-verify: 
 	npx hardhat deploy --verify --network $(NETWORK)
 
+deploy-gnosis: 
+	npx hardhat deploy --verify --network gnosis
+
+deploy-chiado: 
+	npx hardhat deploy --verify --network chiado
+
+deploy-scroll: 
+	npx hardhat deploy --verify --network scrollAlpha
+
 #-------------- PLAYGROUND ----------------#
 
 create-prompt:
