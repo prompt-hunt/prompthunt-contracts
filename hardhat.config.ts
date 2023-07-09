@@ -36,6 +36,10 @@ const config: HardhatUserConfig = {
     hardhat: {
       accounts,
     },
+    goerli: {
+      url: 'https://goerli.blockpi.network/v1/rpc/public',
+      accounts,
+    },
     mumbai: {
       url: 'https://matic-mumbai.chainstacklabs.com',
       accounts,

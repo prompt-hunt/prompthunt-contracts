@@ -18,6 +18,9 @@ deploy-chiado:
 deploy-scroll: 
 	npx hardhat deploy --verify --network scrollAlpha
 
+deploy-goerli: 
+	npx hardhat deploy --network goerli
+
 #-------------- PLAYGROUND ----------------#
 
 create-prompt:
